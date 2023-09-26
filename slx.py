@@ -162,24 +162,42 @@ def renderscene():
     glTranslatef(0.0, 0.0, g_zTrans)
     
     # glColor3f(1, 1, 1)
-    glPolygonMode(GL_FRONT, GL_FILL)
-    glPolygonMode(GL_BACK, GL_FILL)
+    # glPolygonMode(GL_FRONT, GL_FILL)
+    # glPolygonMode(GL_BACK, GL_FILL)
     glLineWidth(2.0)
     for idx in smpl_f:
+        vert1 = smpl_v[idx[0]]
+        vert2 = smpl_v[idx[1]]
+        vert3 = smpl_v[idx[2]]
+        norm1 = smpl_n[idx[0]]
+        norm2 = smpl_n[idx[1]]
+        norm3 = smpl_n[idx[2]]
+        # norm1 = -1 * norm1
+        # norm2 = -1 * norm2
+        # norm3 = -1 * norm3
+        color1 = norm1*0.5 + 0.5
+        color2 = norm2*0.5 + 0.5
+        color3 = norm3*0.5 + 0.5
         glBegin(GL_TRIANGLES)
-        color1 = smpl_n[idx[0]]*0.5 + 0.5
-        color2 = smpl_n[idx[1]]*0.5 + 0.5
-        color3 = smpl_n[idx[2]]*0.5 + 0.5
-        glColor3f(color1[0], color1[1], color1[2])
-        glNormal3f(smpl_n[idx[0]][0], smpl_n[idx[0]][1], smpl_n[idx[0]][2])
-        glVertex3f(smpl_v[idx[0]][0], smpl_v[idx[0]][1], smpl_v[idx[0]][2])
-        glColor3f(color2[0], color2[1], color2[2])
-        glNormal3f(smpl_n[idx[1]][0], smpl_n[idx[1]][1], smpl_n[idx[1]][2])
-        glVertex3f(smpl_v[idx[1]][0], smpl_v[idx[1]][1], smpl_v[idx[1]][2])
-        glColor3f(color3[0], color3[1], color3[2])
-        glNormal3f(smpl_n[idx[2]][0], smpl_n[idx[2]][1], smpl_n[idx[2]][2])
-        glVertex3f(smpl_v[idx[2]][0], smpl_v[idx[2]][1], smpl_v[idx[2]][2])
+        # glColor3f(color1[0], color1[1], color1[2])
+        glNormal3f(norm1[0], norm1[1], norm1[2])
+        glVertex3f(vert1[0], vert1[1], vert1[2])
+        # glColor3f(color2[0], color2[1], color2[2])
+        glNormal3f(norm2[0], norm2[1], norm2[2])
+        glVertex3f(vert2[0], vert2[1], vert2[2])
+        # glColor3f(color3[0], color3[1], color3[2])
+        glNormal3f(norm3[0], norm3[1], norm3[2])
+        glVertex3f(vert3[0], vert3[1], vert3[2])
         glEnd()
+        line_length = 0.03
+        # glBegin(GL_LINES)
+        # glVertex3f(vert1[0], vert1[1], vert1[2])
+        # glVertex3f(vert1[0] + line_length*norm1[0], vert1[1] + line_length*norm1[1], vert1[2] + line_length*norm1[2])
+        # glVertex3f(vert2[0], vert2[1], vert2[2])
+        # glVertex3f(vert2[0] + line_length*norm2[0], vert2[1] + line_length*norm2[1], vert2[2] + line_length*norm2[2])
+        # glVertex3f(vert3[0], vert3[1], vert3[2])
+        # glVertex3f(vert3[0] + line_length*norm3[0], vert3[1] + line_length*norm3[1], vert3[2] + line_length*norm3[2])
+        # glEnd()
     glutSwapBuffers()
     return
 
@@ -223,11 +241,12 @@ glEnable(GL_LIGHTING)
 # glLightfv(GL_LIGHT0, GL_SPECULAR, g_specular)
 glEnable(GL_LIGHT0)
 glEnable(GL_CULL_FACE)
+# glFrontFace(GL_CCW)
 
-glEnable(GL_COLOR_MATERIAL)
-glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE)
-glMaterialfv(GL_FRONT, GL_SPECULAR, g_specref)
-glMateriali(GL_FRONT, GL_SHININESS, 128)
+# glEnable(GL_COLOR_MATERIAL)
+# glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE)
+# glMaterialfv(GL_FRONT, GL_SPECULAR, g_specref)
+# glMateriali(GL_FRONT, GL_SHININESS, 128)
 
 glutReshapeFunc(reshape)
 glutDisplayFunc(renderscene)
